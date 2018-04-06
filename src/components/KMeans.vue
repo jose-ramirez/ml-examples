@@ -18,6 +18,33 @@ export default class KMeans extends Vue {
 
   mounted(){
     this.model = new kmeans(data, 2, [{x: 2, y: 80}, {x: 3, y: 90}])
+    let google = window["google"]
+    google.charts.load("current", { packages: ["corechart"] })
+    google.charts.setOnLoadCallback(draw)
+
+    let d = [
+      ["X", "gray", "black"],
+      ...data.map(r => [r.x, r.y, null]),
+      ...this.model.parameters.centroids.map(c => [c.x, null, c.y])
+    ]
+
+    function draw(){
+      let dataPoints = google.visualization.arrayToDataTable(d)
+
+      var options = {
+        title: "Old faithful dataset",
+        hAxis: { title: "Eruption duration (min)", minValue: 0, maxValue: 5 },
+        vAxis: { title: "Waiting time (min)", minValue: 40, maxValue: 100 },
+        legend: "none",
+        colors: ["#AAA", "#000"]
+      }
+
+      var chart = new google.visualization.ScatterChart(
+        document.getElementById("chart_div")
+      )
+
+      chart.draw(dataPoints, options);
+    }
   }
 
 
