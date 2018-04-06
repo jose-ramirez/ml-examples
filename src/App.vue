@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <HelloWorld/>
+    <KMeans/>
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld'
+<script lang="ts">
+import KMeans from './components/KMeans.vue'
+import Vue from 'vue'
 
-export default {
+export default{
   name: 'App',
   components: {
-    HelloWorld
+    KMeans
   }
 }
 </script>
