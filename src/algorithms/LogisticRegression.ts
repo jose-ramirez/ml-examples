@@ -1,6 +1,6 @@
 import utils from '../utils/math'
 
-export default class kmeans {
+export default class logreg {
 
     public data: any[] = [];
     public parameters: any = {};

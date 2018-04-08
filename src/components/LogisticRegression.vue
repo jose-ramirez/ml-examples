@@ -1,11 +1,11 @@
 <template>
   <div class="flex-container">
-    <p>kmeans</p>
+    <p>log reg</p>
     <div id="chart_div" style="width: 600px; height: 600px;"></div>
 
     <div>
       <button v-on:click="nextStep">Next step</button>
-      <ul>
+      <ul id="example-1">
         <li v-for="cost in costArray" :key="cost">
           {{ cost }}
         </li>
@@ -18,14 +18,14 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from 'axios'
-import Component from 'vue-class-component'
 import data from '../data'
-import kmeans from '../algorithms/KMeans'
+import Component from 'vue-class-component'
+import logreg from '../algorithms/LogisticRegression'
 
 @Component({})
-export default class KMeans extends Vue {
+export default class LogisticRegression extends Vue {
   costArray: any[] = []
-  private model: any = new kmeans(data, 2, [{x: 2, y: 80}, {x: 3, y: 90}])
+  private model: any = new logreg(data, 2, [{x: 2, y: 80}, {x: 3, y: 90}])
   private cost: number = 0
 
   mounted(){

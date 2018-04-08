@@ -1,18 +1,12 @@
 <template>
   <div id="app">
-    <KMeans/>
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
-import KMeans from './components/KMeans.vue'
-import Vue from 'vue'
-
 export default{
-  name: 'App',
-  components: {
-    KMeans
-  }
+  name: 'App'
 }
 </script>
 
