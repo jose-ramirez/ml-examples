@@ -18,4 +18,4 @@ npm run build
 npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+I got the idea of implementing PCA it from [here](https://users.humboldt.edu/rizzardi/Data.dir/BirdLengWingMass.txt), using [this book](http://www.math.union.edu/~jaureguj/PCA.pdf) as a reference.
