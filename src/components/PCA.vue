@@ -16,9 +16,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import data from '../data/other-data'
+import data from '../data/birds'
 import Component from 'vue-class-component'
-import logreg from '../algorithms/LogisticRegression'
+import logreg from '../algorithms/PCA'
 
 @Component({})
 export default class LogisticRegression extends Vue {
@@ -28,7 +28,7 @@ export default class LogisticRegression extends Vue {
 
   initialOptions() {
     return {
-      title: "Some other dataset",
+      title: "Birds",
       hAxis: { title: "X", minValue: 0, maxValue: 5 },
       vAxis: { title: "Y", minValue: 0, maxValue: 5 },
       legend: "none",
@@ -40,7 +40,7 @@ export default class LogisticRegression extends Vue {
       let google = window["google"]
       let d = [
         ["X", "gray"],
-        ...data.map(r => [r.x, r.y]),
+        ...data.map(r => [r.length, r.weight]),
       ]
       let dataPoints = google.visualization.arrayToDataTable(d)
       let chart = new google.visualization.ScatterChart(document.getElementById("chart_div"))

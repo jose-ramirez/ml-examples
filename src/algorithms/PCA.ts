@@ -1,6 +1,6 @@
 import utils from '../utils/math'
 
-export default class logreg {
+export default class PCA {
 
     public data: any[] = []
     public parameters: any = {}
