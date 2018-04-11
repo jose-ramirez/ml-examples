@@ -18,4 +18,4 @@ npm run build
 npm run build --report
 ```
 
-I got the idea of implementing PCA it from [here](https://users.humboldt.edu/rizzardi/Data.dir/BirdLengWingMass.txt), using [this book](http://www.math.union.edu/~jaureguj/PCA.pdf) as a reference.
+I got the dataset to implement the PCA açgorithm from [here](https://users.humboldt.edu/rizzardi/Data.dir/BirdLengWingMass.txt), using [this book](http://www.math.union.edu/~jaureguj/PCA.pdf) as a reference.
