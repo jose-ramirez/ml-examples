@@ -17,20 +17,5 @@ export default {
 
     min: (a) => {
         return a.indexOf(Math.min(...a))
-    },
-
-    normalize(data){
-        let x = data.map(p => p.x)
-        let y = data.map(p => p.y)
-
-        let xmax = Math.max(...x)
-        let xmin = Math.min(...x)
-        let ymax = Math.max(...y)
-        let ymin = Math.min(...y)
-
-        let xn = x.map(_x => (_x - xmin) / (xmax - xmin))
-        let yn = y.map(_y => (_y - ymin) / (ymax - ymin))
-
-        return xn.map((e, i) => ({x: e, y: yn[i]}))
     }
 }

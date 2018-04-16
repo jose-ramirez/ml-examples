@@ -16,14 +16,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import data from '../data/birds'
+import birds from '../data/birds'
 import Component from 'vue-class-component'
-import logreg from '../algorithms/PCA'
+import pca from '../algorithms/PCA'
 
 @Component({})
-export default class LogisticRegression extends Vue {
+export default class PCA extends Vue {
   costArray: any[] = []
-  private model: any = new logreg(data);
+  private model: any = new pca(birds);
   private cost: number = 0
 
   initialOptions() {
@@ -40,7 +40,7 @@ export default class LogisticRegression extends Vue {
       let google = window["google"]
       let d = [
         ["X", "gray"],
-        ...data.map(r => [r.length, r.weight]),
+        ...birds.map(r => [r.length, r.weight]),
       ]
       let dataPoints = google.visualization.arrayToDataTable(d)
       let chart = new google.visualization.ScatterChart(document.getElementById("chart_div"))

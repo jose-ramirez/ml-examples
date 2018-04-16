@@ -1,6 +1,8 @@
 import utils from '../utils/math'
+import math from 'mathjs'
+import numeric from 'numeric'
 
-export default class PCA {
+export default class pca {
 
     public data: any[] = []
     public parameters: any = {}
@@ -8,7 +10,7 @@ export default class PCA {
     public steps: number = 10
 
     constructor(data: any){
-      this.data = data
+      this.data = data.map(o => Object.keys(o).slice(1, 4).map(k => o[k]))
     }
 
     cost(){
@@ -17,7 +19,14 @@ export default class PCA {
     }
 
     step(){
-      // define the train step here
+      let t = this.data.length
+      let mu = numeric.transpose(this.data).map(r => math.mean(r))
+      let b = this.data.map(r => math.add(r, math.unaryMinus(mu)))
+      let m = numeric.dotMMbig(numeric.transpose(b), b)
+      let s = math.map(m, r => math.multiply(r, 1 / (t - 1)))
+      let values = numeric.eig(s)
+      console.log(values)
+      console.log(this.data)
     }
 
     train(){

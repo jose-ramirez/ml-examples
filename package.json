@@ -10,6 +10,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "google-charts": "^1.1.0",
+    "mathjs": "^4.1.1",
+    "numeric": "^1.2.6",
     "vue": "^2.5.16",
     "vue-class-component": "^6.2.0",
     "vue-router": "^3.0.1"
