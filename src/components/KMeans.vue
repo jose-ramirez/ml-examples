@@ -19,6 +19,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import data from '../data/old-faithful'
 import kmeans from '../algorithms/KMeans'
+import {GoogleCharts} from 'google-charts'
 
 @Component({})
 export default class KMeans extends Vue {
@@ -47,40 +48,34 @@ export default class KMeans extends Vue {
   }
 
   initialDraw(){
-      let google = window["google"]
       let d = [
         ["X", "gray", "black"],
         ...data.map(r => [r.x, r.y, null]),
         ...this.model.parameters.centroids.map(c => [c.x, null, c.y])
       ]
-      let dataPoints = google.visualization.arrayToDataTable(d)
-      let chart = new google.visualization.ScatterChart(document.getElementById("chart_div"))
+      let dataPoints = GoogleCharts.api.visualization.arrayToDataTable(d)
+      let chart = new GoogleCharts.api.visualization.ScatterChart(document.getElementById("chart_div"))
       chart.draw(dataPoints, this.initialOptions())
   }
 
   updateDraw(){
-      let google = window["google"]
       let d = [
         ["X", "red", "blue", "black"],
         ...this.model.parameters.clusters[0].map(r => [r.x, r.y, null, null]),
         ...this.model.parameters.clusters[1].map(b => [b.x, null, b.y, null]),
         ...this.model.parameters.centroids.map(c => [c.x, null, null, c.y])
       ]
-      let dataPoints = google.visualization.arrayToDataTable(d)
-      let chart = new google.visualization.ScatterChart(document.getElementById("chart_div"))
+      let dataPoints = GoogleCharts.api.visualization.arrayToDataTable(d)
+      let chart = new GoogleCharts.api.visualization.ScatterChart(document.getElementById("chart_div"))
       chart.draw(dataPoints, this.updatedOptions())
   }
 
   mounted(){
-    let google = window["google"]
-    google.charts.load("current", { packages: ["corechart"] })
-    google.charts.setOnLoadCallback(this.initialDraw)
+    GoogleCharts.load(this.initialDraw)
   }
 
   updatePlot(){
-    let google = window["google"]
-    google.charts.load("current", { packages: ["corechart"] })
-    google.charts.setOnLoadCallback(this.updateDraw)
+    GoogleCharts.load(this.updateDraw)
   }
 
   nextStep(){

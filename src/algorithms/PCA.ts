@@ -1,6 +1,7 @@
 import utils from '../utils/math'
 import math from 'mathjs'
 import numeric from 'numeric'
+import _ from 'lodash'
 
 export default class pca {
 
@@ -24,9 +25,8 @@ export default class pca {
       let b = this.data.map(r => math.add(r, math.unaryMinus(mu)))
       let m = numeric.dotMMbig(numeric.transpose(b), b)
       let s = math.map(m, r => math.multiply(r, 1 / (t - 1)))
-      let values = numeric.eig(s)
-      console.log(values)
-      console.log(this.data)
+      let {E, lambda} = numeric.eig(s)
+      let values = _.zip(lambda.x, numeric.transpose(E.x)).sort((a, b) => b[0] - a[0])
     }
 
     train(){

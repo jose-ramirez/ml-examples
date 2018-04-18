@@ -19,6 +19,7 @@ import Vue from 'vue'
 import birds from '../data/birds'
 import Component from 'vue-class-component'
 import pca from '../algorithms/PCA'
+import {GoogleCharts} from 'google-charts'
 
 @Component({})
 export default class PCA extends Vue {
@@ -37,20 +38,17 @@ export default class PCA extends Vue {
   }
 
   initialDraw(){
-      let google = window["google"]
       let d = [
         ["X", "gray"],
         ...birds.map(r => [r.length, r.weight]),
       ]
-      let dataPoints = google.visualization.arrayToDataTable(d)
-      let chart = new google.visualization.ScatterChart(document.getElementById("chart_div"))
+      let dataPoints = GoogleCharts.api.visualization.arrayToDataTable(d)
+      let chart = new GoogleCharts.api.visualization.ScatterChart(document.getElementById("chart_div"))
       chart.draw(dataPoints, this.initialOptions())
   }
 
   mounted(){
-    let google = window["google"]
-    google.charts.load("current", { packages: ["corechart"] })
-    google.charts.setOnLoadCallback(this.initialDraw)
+    GoogleCharts.load(this.initialDraw)
   }
 
   nextStep(){
