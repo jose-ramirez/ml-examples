@@ -4,11 +4,6 @@
 
     <div>
       <button v-on:click="nextStep">Next step</button>
-      <ul>
-        <li v-for="cost in costArray" :key="cost">
-          {{ cost }}
-        </li>
-      </ul>
     </div>
 
   </div>
@@ -23,17 +18,15 @@ import {GoogleCharts} from 'google-charts'
 
 @Component({})
 export default class PCA extends Vue {
-  costArray: any[] = []
   private model: any = new pca(birds);
-  private cost: number = 0
 
   initialOptions() {
     return {
-      title: "Birds",
+      title: "Birds dataset",
       hAxis: { title: "X", minValue: 0, maxValue: 5 },
       vAxis: { title: "Y", minValue: 0, maxValue: 5 },
       legend: "none",
-      colors: ["#AAA", "#000"]
+      colors: ["#AAA"]
     }
   }
 
@@ -47,13 +40,37 @@ export default class PCA extends Vue {
       chart.draw(dataPoints, this.initialOptions())
   }
 
+  updatedOptions(){
+    return {
+      title: "Birds dataset",
+      hAxis: { title: "Component 1", minValue: 0, maxValue: 1 },
+      vAxis: { title: "Component 2", minValue: 0, maxValue: 1 },
+      legend: "none",
+      colors: ["#AAA"]
+    }
+  }
+
+  updateDraw(){
+      let d = [
+        ["X", "gray"],
+        ...this.model.parameters.projected_data
+      ]
+      let dataPoints = GoogleCharts.api.visualization.arrayToDataTable(d)
+      let chart = new GoogleCharts.api.visualization.ScatterChart(document.getElementById("chart_div"))
+      chart.draw(dataPoints, this.updatedOptions())
+  }
+
+  updatePlot(){
+    GoogleCharts.load(this.updateDraw)
+  }
+
   mounted(){
+    this.model.step()
     GoogleCharts.load(this.initialDraw)
   }
 
   nextStep(){
-    this.model.step()
-    this.costArray.push(this.model.parameters.cost)
+    this.updatePlot()
   }
 }
 </script>

@@ -36,17 +36,6 @@ export default class KMeans extends Vue {
       colors: ["#AAA", "#000"]
     }
   }
-
-  updatedOptions(){
-    return {
-      title: "Old faithful dataset",
-      hAxis: { title: "Eruption duration (min)", minValue: 0, maxValue: 1 },
-      vAxis: { title: "Waiting time (min)", minValue: 0, maxValue: 1 },
-      legend: "none",
-      colors: ["#F00", "#00F", "#000"]
-    }
-  }
-
   initialDraw(){
       let d = [
         ["X", "gray", "black"],
@@ -56,6 +45,16 @@ export default class KMeans extends Vue {
       let dataPoints = GoogleCharts.api.visualization.arrayToDataTable(d)
       let chart = new GoogleCharts.api.visualization.ScatterChart(document.getElementById("chart_div"))
       chart.draw(dataPoints, this.initialOptions())
+  }
+
+  updatedOptions(){
+    return {
+      title: "Old faithful dataset",
+      hAxis: { title: "Eruption duration (min)", minValue: 0, maxValue: 1 },
+      vAxis: { title: "Waiting time (min)", minValue: 0, maxValue: 1 },
+      legend: "none",
+      colors: ["#F00", "#00F", "#000"]
+    }
   }
 
   updateDraw(){
@@ -70,12 +69,12 @@ export default class KMeans extends Vue {
       chart.draw(dataPoints, this.updatedOptions())
   }
 
-  mounted(){
-    GoogleCharts.load(this.initialDraw)
-  }
-
   updatePlot(){
     GoogleCharts.load(this.updateDraw)
+  }
+
+  mounted(){
+    GoogleCharts.load(this.initialDraw)
   }
 
   nextStep(){
