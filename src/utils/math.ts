@@ -1,3 +1,6 @@
+import math from 'mathjs'
+import numeric from 'numeric'
+
 export default {
 
     // centroid for a set of 2d points, assuming the usual (cartesian) structure for them.
@@ -17,5 +20,15 @@ export default {
 
     min: (a) => {
         return a.indexOf(Math.min(...a))
+    },
+
+    normalize(dataset) {
+        let mu = math.mean(dataset, 0)
+        let sigma = numeric
+            .transpose(dataset)
+            .map(r => math.std(r))
+            .map(x => 1 / x)
+        let m = dataset.map(r => math.chain(r).subtract(mu).dotMultiply(sigma).done())  
+        return m
     }
 }

@@ -11,7 +11,8 @@ export default class pca {
     public steps: number = 10
 
     constructor(data: any){
-      this.data = data.map(o => Object.keys(o).slice(1, 4).map(k => o[k]))
+      // now it's the iris dataset
+      this.data = utils.normalize(data.map(o => Object.keys(o).slice(0, 4).map(k => o[k])))
     }
 
     step(){
@@ -26,6 +27,8 @@ export default class pca {
       this.parameters.values = _
         .zip(lambda.x, T(E.x))
         .sort((a, b) => b[0] - a[0])
+ 
+      // project the dataset through(?) the principal components :)
       this.transform(2)
     }
 
