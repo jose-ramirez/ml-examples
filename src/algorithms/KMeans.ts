@@ -1,6 +1,7 @@
 import utils from '../utils/math'
+import BaseAlgorithm from './BaseAlgorithm'
 
-export default class kmeans {
+export default class kmeans implements BaseAlgorithm {
 
     public data: any[] = [];
     public parameters: any = {};

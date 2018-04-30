@@ -17,14 +17,14 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import data from '../data/students'
+import students from '../data/students'
 import logreg from '../algorithms/LogisticRegression'
 import {GoogleCharts} from 'google-charts'
 
 @Component({})
-export default class LogReg extends Vue {
+export default class LogReg extends Vue { 
   costArray: any[] = []
-  private model: any = new logreg()
+  private model: any = new logreg(students)
   private cost: number = 0
 
   initialOptions() {
@@ -33,14 +33,17 @@ export default class LogReg extends Vue {
       hAxis: { title: "Test 1 result", minValue: 50, maxValue: 100 },
       vAxis: { title: "Test 2 result", minValue: 50, maxValue: 100 },
       legend: "none",
-      colors: ["#AAA"]
+      colors: ["yellow", "black"]
     }
   }
 
   initialDraw(){
       let d = [
-        ["X", "gray"],
-        ...data.map(r => [r.grade_1, r.grade_2])
+        ["X", "Approved", "Failed"],
+        ...students.map(r => {
+          if(r.approved == 1) {return [r.grade_1, r.grade_2, null]}
+          else {return [r.grade_1, null, r.grade_2]} 
+        })
       ]
       let dataPoints = GoogleCharts.api.visualization.arrayToDataTable(d)
       let chart = new GoogleCharts.api.visualization.ScatterChart(document.getElementById("chart_div"))
