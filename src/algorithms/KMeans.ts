@@ -3,15 +3,13 @@ import BaseAlgorithm from './BaseAlgorithm'
 
 export default class kmeans implements BaseAlgorithm {
 
-    public data: any[] = [];
     public parameters: any = {};
     public tolerance: number = 0.0001;
     public steps: number = 10;
-    public clusters: number = 2;
+    public num_clusters: number = 2;
 
-    constructor(data: any[], clusters: number, initial_centroids: any[]){
-        this.data = data
-        this.clusters = clusters
+    constructor(num_clusters: number, initial_centroids: any[]){
+        this.num_clusters = num_clusters
         this.parameters = {
             centroids: initial_centroids,
             clusters: initial_centroids.map(c => []),
@@ -21,7 +19,7 @@ export default class kmeans implements BaseAlgorithm {
 
     cost(){
         let total = 0
-        for (let i = 0; i < this.clusters; i++) {
+        for (let i = 0; i < this.num_clusters; i++) {
             let c = this.parameters.clusters[i];
             let e = this.parameters.centroids[i];
             total += c
@@ -31,14 +29,14 @@ export default class kmeans implements BaseAlgorithm {
         return total
     }
 
-    step(){
+    step(data){
         // update clusters
         this.parameters.clusters = this.parameters.centroids.map(c => [])
-        let indices = this.data
+        let indices = data
             .map(p => this.parameters.centroids.map(c => utils.distance(c, p)))
             .map(d => utils.min(d))
         indices.forEach((e, i) => {
-            this.parameters.clusters[e].push(this.data[i])
+            this.parameters.clusters[e].push(data[i])
         });
 
         // update centroids
@@ -48,10 +46,10 @@ export default class kmeans implements BaseAlgorithm {
         this.parameters.cost = this.cost()
     }
 
-    train(){
+    train(data){
         let i = 0
         while(i < this.steps){
-            this.step();
+            this.step(data);
         }
     }
 }

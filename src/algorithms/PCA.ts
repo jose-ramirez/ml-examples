@@ -26,7 +26,7 @@ export default class pca {
       let {E, lambda} = numeric.eig(s)
       this.parameters.values = _
         .zip(lambda.x, T(E.x))
-        .sort((a, b) => b[0] - a[0])
+        .sort((a: any, b: any) => b[0] - a[0])
  
       // project the dataset through(?) the principal components :)
       this.transform(2)

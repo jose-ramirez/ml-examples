@@ -24,7 +24,7 @@ import {GoogleCharts} from 'google-charts'
 @Component({})
 export default class LogReg extends Vue { 
   costArray: any[] = []
-  private model: any = new logreg(students)
+  private model: any = new logreg()
   private cost: number = 0
 
   initialOptions() {

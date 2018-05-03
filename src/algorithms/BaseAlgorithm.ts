@@ -1,5 +1,4 @@
 export default interface BaseAlgorithm {
-    data: any
 
     parameters: any
 
@@ -9,7 +8,7 @@ export default interface BaseAlgorithm {
 
     cost(): number
 
-    step()
+    step(data: any[])
 
-    train()
+    train(data: any[])
 }

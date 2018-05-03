@@ -1,7 +1,6 @@
-import BaseAlgorithm from "./BaseAlgorithm";
+import NumericAlgorithm from "./NumericAlgorithm";
 
-export default class logreg implements BaseAlgorithm {
-    data: any[] = []
+export default class logreg implements NumericAlgorithm {
 
     parameters: any = {}
     
@@ -9,23 +8,23 @@ export default class logreg implements BaseAlgorithm {
     
     steps: number = 10
 
-    constructor(data) {
-        this.data = data
+    constructor() {
     }
 
-    cost(): number {
+    cost(){
         return -1
     }
 
-    step() {
+    step(data) {
         throw new Error("Method not implemented.");
     }
 
-    train() {
+    train(data) {
         throw new Error("Method not implemented.");
     }
 
     gradient(){
         // depends on the parameters
+        return -1
     }
 }

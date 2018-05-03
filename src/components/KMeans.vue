@@ -24,7 +24,7 @@ import {GoogleCharts} from 'google-charts'
 @Component({})
 export default class KMeans extends Vue {
   costArray: any[] = []
-  private model: any = new kmeans(data, 2, [{x: 2, y: 80}, {x: 3, y: 90}])
+  private model: any = new kmeans(2, [{x: 2, y: 80}, {x: 3, y: 90}])
   private cost: number = 0
 
   initialOptions() {
@@ -78,7 +78,7 @@ export default class KMeans extends Vue {
   }
 
   nextStep(){
-    this.model.step()
+    this.model.step(data)
     this.costArray.push(this.model.parameters.cost)
     this.updatePlot()
   }
