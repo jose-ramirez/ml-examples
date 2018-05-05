@@ -1,4 +1,5 @@
-export default [
+export default {
+  data: [
     {
       "grade_1": 34.62365962451697,
       "grade_2": 78.0246928153624,
@@ -499,4 +500,11 @@ export default [
       "grade_2": 89.52981289513276,
       "approved": 1
     }
-  ]
+  ],
+
+  get extract (){
+    let X = this.data.map(x => [1.0, x.grade_1, x.grade_2])
+    let y = this.data.map(x => x.approved)
+    return {X, y}
+  }
+}

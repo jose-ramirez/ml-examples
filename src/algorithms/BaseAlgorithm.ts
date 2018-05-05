@@ -6,7 +6,7 @@ export default interface BaseAlgorithm {
 
     steps: number
 
-    cost(): number
+    cost(data: any[]): number
 
     step(data: any[])
 

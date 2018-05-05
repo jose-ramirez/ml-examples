@@ -32,7 +32,7 @@ export default {
 
     // normalizes each column of the dataset to have
     // mean 0 and standard deviation 1.
-    normalize(dataset) {
+    normalize: (dataset) => {
         // the columns' means
         let mu = math.mean(dataset, 0)
 
@@ -48,5 +48,9 @@ export default {
                 .subtract(mu)
                 .dotMultiply(sigma)
                 .done())  
+    },
+
+    sigmoid: (x) => {
+        return 1 / (1 + math.exp(-x))
     }
 }

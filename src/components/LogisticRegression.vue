@@ -38,9 +38,9 @@ export default class LogReg extends Vue {
   }
 
   initialDraw(){
-      let d = [
+      let d = [ 
         ["X", "Approved", "Failed"],
-        ...students.map(r => {
+        ...students.data.map(r => {
           if(r.approved == 1) {return [r.grade_1, r.grade_2, null]}
           else {return [r.grade_1, null, r.grade_2]} 
         })
@@ -81,8 +81,8 @@ export default class LogReg extends Vue {
   }
 
   nextStep(){
-    //this.model.step()
-    //this.costArray.push(this.model.parameters.cost)
+    this.model.step(students.extract)
+    this.costArray.push(this.model.parameters.cost)
     //this.updatePlot()
   }
 }
