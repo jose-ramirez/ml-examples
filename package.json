@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/lodash": "^4.14.108",
     "@types/mathjs": "^3.20.0",
+    "fmin": "0.0.2",
     "google-charts": "^1.1.0",
     "lodash": "^4.17.5",
     "mathjs": "^4.1.1",
