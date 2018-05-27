@@ -1,3 +1,7 @@
+import utils from '../utils/math'
+import _ from 'lodash'
+import numeric from 'numeric'
+
 export default {
   data: [
     {
@@ -506,5 +510,38 @@ export default {
     let X = this.data.map(x => [1.0, x.grade_1, x.grade_2])
     let y = this.data.map(x => x.approved)
     return {X, y}
+  },
+
+  get normalized (){
+    let X1 = this.data.map(x => [x.grade_1, x.grade_2])
+    let X = utils.normalize(X1)
+      .map(x1 => [1.0, x1[0], x1[1]])
+    let y = this.data.map(x => x.approved)
+    return {X, y}
+  },
+
+  get matrix () {
+    let X = this.data.map(x => [x.grade_1, x.grade_2])
+    let y = this.data.map(x => [x.approved]) 
+    let mat = _.zip(X, y).map((r: any) => [...r[0], ...r[1]])
+    return [
+      ...mat.map(r => {
+        if(r[2] == 1) {return [r[0], r[1], null]}
+        else {return [r[0], null, r[1]]} 
+      })
+    ]
+  },
+
+  get normalMatrix () {
+    let X1 = this.data.map(x => [x.grade_1, x.grade_2])
+    let X = utils.normalize(X1)
+    let y = this.data.map(x => [x.approved]) 
+    let mat = _.zip(X, y).map((r: any) => [...r[0], ...r[1]])
+    return [
+      ...mat.map(r => {
+        if(r[2] == 1) {return [r[0], r[1], null]}
+        else {return [r[0], null, r[1]]} 
+      })
+    ]
   }
 }

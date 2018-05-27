@@ -1,5 +1,5 @@
 import utils from '../utils/math'
-import math from 'mathjs'
+import mathjs from 'mathjs'
 import numeric from 'numeric'
 import _ from 'lodash'
 
@@ -19,10 +19,10 @@ export default class pca {
       // Get the eigen-stuff:
       let t = this.data.length
       let T = numeric.transpose
-      let mu = math.mean(this.data, 0)
-      let b = this.data.map(r => math.subtract(r, mu))
+      let mu = mathjs.mean(this.data, 0)
+      let b = this.data.map(r => mathjs.subtract(r, mu))
       let m = numeric.dotMMbig(T(b), b)
-      let s = math.multiply(m, 1 / (t - 1))
+      let s = mathjs.multiply(m, 1 / (t - 1))
       let {E, lambda} = numeric.eig(s)
       this.parameters.values = _
         .zip(lambda.x, T(E.x))
@@ -35,7 +35,7 @@ export default class pca {
     transform(num_components){
         let T = numeric.transpose
         let M = T(this.parameters.values.slice(0, num_components).map(v => v[1]))
-        this.parameters.projected_data = math.multiply(this.data, M)
+        this.parameters.projected_data = mathjs.multiply(this.data, M)
     }
 
     train(){

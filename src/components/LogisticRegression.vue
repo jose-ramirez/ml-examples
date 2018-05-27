@@ -35,22 +35,16 @@ export default class LogReg extends Vue {
   initialOptions() {
     return {
       title: "Student admission test results' dataset",
-      hAxis: { title: "Test 1 result", minValue: 50, maxValue: 100 },
-      vAxis: { title: "Test 2 result", minValue: 50, maxValue: 100 },
+      hAxis: { title: "Test 1 result", minValue: -5, maxValue: 5 },
+      vAxis: { title: "Test 2 result", minValue: -5, maxValue: 5 },
       legend: "none",
       colors: ["green", "black"]
     }
   }
 
   initialDraw(){
-      let d = [ 
-        ["X", "Approved", "Failed"],
-        ...students.data.map(r => {
-          if(r.approved == 1) {return [r.grade_1, r.grade_2, null]}
-          else {return [r.grade_1, null, r.grade_2]} 
-        })
-      ]
-      let dataPoints = GoogleCharts.api.visualization.arrayToDataTable(d)
+      let d = [["X", "Approved", "Failed"], ...students.matrix]
+      let dataPoints = GoogleCharts.api.visualization.arrayToDataTable([["X", "Approved", "Failed"], ...students.matrix])
       let chart = new GoogleCharts.api.visualization.ScatterChart(document.getElementById("chart_div"))
       chart.draw(dataPoints, this.initialOptions())
   }
@@ -58,8 +52,8 @@ export default class LogReg extends Vue {
   updatedOptions(){
     return {
       title: "Student admission test results' dataset",
-      hAxis: { title: "Test 1 result", minValue: 50, maxValue: 100 },
-      vAxis: { title: "Test 2 result", minValue: 50, maxValue: 100 },
+      hAxis: { title: "Test 1 result", minValue: -5, maxValue: 5 },
+      vAxis: { title: "Test 2 result", minValue: -5, maxValue: 5 },
       legend: "none",
       colors: ["green", "black", "red"],
       interpolateNulls: true,
@@ -70,21 +64,19 @@ export default class LogReg extends Vue {
   }
 
   updateDraw(){
+      // the separating line:
       let p = this.params
-      let range = students.data
-        .map(d => d.grade_1)
+      let border = students.matrix.map(d => d[0])
         .map(x1 => (-p.theta[0] - (p.theta[1] * x1)) / p.theta[2])
-      let d = [
-        ...students.data.map(r => {
-          if(r.approved == 1) {return [r.grade_1, r.grade_2, null]}
-          else {return [r.grade_1, null, r.grade_2]} 
-        })
-      ]
-      let _d = _.zip(d, range).map((s: any) => [...s[0], s[1]])
+
+      // the (possibly updated)) matrix:
+      let _d = _.zip(students.matrix, border).map((s: any) => [...s[0], s[1]])
       _d.unshift(["X", "approved", "failed", "border"])
-      console.log(_d)
+
+      // graph everytinh in one place:
       let dataPoints = GoogleCharts.api.visualization.arrayToDataTable(_d)
-      let chart = new GoogleCharts.api.visualization.ScatterChart(document.getElementById("chart_div"))
+      let chartDiv = document.getElementById("chart_div")
+      let chart = new GoogleCharts.api.visualization.ScatterChart(chartDiv)
       chart.draw(dataPoints, this.updatedOptions())
   }
 

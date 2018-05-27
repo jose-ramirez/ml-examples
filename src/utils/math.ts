@@ -1,4 +1,4 @@
-import math from 'mathjs'
+import mathjs from 'mathjs'
 import numeric from 'numeric'
 
 export default {
@@ -34,23 +34,57 @@ export default {
     // mean 0 and standard deviation 1.
     normalize: (dataset) => {
         // the columns' means
-        let mu = math.mean(dataset, 0)
+        let mu = mathjs.mean(dataset, 0)
 
         // the columns' sigmas
         let sigma = numeric
             .transpose(dataset)
-            .map(r => math.std(r))
+            .map(r => mathjs.std(r))
             .map(x => 1 / x)
 
         // the normalization (X => ((X - mu) / sigma))
         return dataset
-            .map(r => math.chain(r)
+            .map(r => mathjs.chain(r)
                 .subtract(mu)
                 .dotMultiply(sigma)
-                .done())  
+                .done())
     },
 
     sigmoid: (x) => {
-        return 1 / (1 + math.exp(-x))
+        return 1 / (1 + mathjs.exp(-x))
+    },
+
+    zeros: (x) => {
+        var r = new Array(x);
+        for (var i = 0; i < x; ++i) { 
+            r[i] = 0;
+        }
+        return r;
+    },
+
+    // zerosM(x,y) { return this.zeros(x).map(function() { return this.zeros(y); }); }
+    dot: (a, b) => {
+        var ret = 0;
+        for (var i = 0; i < a.length; ++i) {
+            ret += a[i] * b[i];
+        }
+        return ret;
+    },
+
+    /*norm2: (a) => {
+        return Math.sqrt(dot(a, a));
+    },*/
+
+    scale(ret, value, c) {
+        for (var i = 0; i < value.length; ++i) {
+            ret[i] = value[i] * c;
+        }
+    },
+
+    weightedSum(ret, w1, v1, w2, v2) {
+        for (var j = 0; j < ret.length; ++j) {
+            ret[j] = w1 * v1[j] + w2 * v2[j];
+        }
     }
+
 }
