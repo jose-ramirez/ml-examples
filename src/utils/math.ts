@@ -62,7 +62,6 @@ export default {
         return r;
     },
 
-    // zerosM(x,y) { return this.zeros(x).map(function() { return this.zeros(y); }); }
     dot: (a, b) => {
         var ret = 0;
         for (var i = 0; i < a.length; ++i) {
@@ -70,10 +69,6 @@ export default {
         }
         return ret;
     },
-
-    /*norm2: (a) => {
-        return Math.sqrt(dot(a, a));
-    },*/
 
     scale(ret, value, c) {
         for (var i = 0; i < value.length; ++i) {
