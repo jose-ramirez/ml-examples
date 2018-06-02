@@ -2,6 +2,7 @@ import math from "../utils/math"
 
 /** minimizes a function using the downhill simplex method */
 export function nelderMead(f, x0, parameters) {
+    var allSteps:any = []
     parameters = parameters || {}
 
     var maxIterations = parameters.maxIterations || x0.length * 200,
@@ -30,6 +31,10 @@ export function nelderMead(f, x0, parameters) {
     }
 
     function updateSimplex(value) {
+        allSteps.push({
+            x: value.slice(),
+            fx: f(value)
+        })
         for (var i = 0; i < value.length; i++) {
             simplex[N][i] = value[i]
         }
@@ -93,10 +98,8 @@ export function nelderMead(f, x0, parameters) {
             expanded.fx = f(expanded)
             if (expanded.fx < reflected.fx) {
                 updateSimplex(expanded)
-                console.log(expanded)
             }  else {
                 updateSimplex(reflected)
-                console.log(reflected)
             }
         }
 
@@ -111,7 +114,6 @@ export function nelderMead(f, x0, parameters) {
                 contracted.fx = f(contracted)
                 if (contracted.fx < worst.fx) {
                     updateSimplex(contracted)
-                    console.log(contracted)
                 } else {
                     shouldReduce = true
                 }
@@ -121,7 +123,6 @@ export function nelderMead(f, x0, parameters) {
                 contracted.fx = f(contracted)
                 if (contracted.fx < reflected.fx) {
                     updateSimplex(contracted)
-                    console.log(contracted)
                 } else {
                     shouldReduce = true
                 }
@@ -139,11 +140,14 @@ export function nelderMead(f, x0, parameters) {
             }
         } else {
             updateSimplex(reflected)
-            console.log(reflected)
         }
     }
 
-    simplex.sort(sortOrder)
-    return {fx : simplex[0].fx,
-            x : simplex[0]}
+    // simplex.sort(sortOrder)
+    // return {fx : simplex[0].fx,
+    //         x : simplex[0]}
+    allSteps.sort((a, b) => b.fx - a.fx)
+    return {
+        allSteps: allSteps
+    }
 }

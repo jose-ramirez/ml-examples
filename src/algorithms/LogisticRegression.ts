@@ -69,8 +69,7 @@ export default class logreg implements NumericAlgorithm {
     train(data) {
         let f = (th) => this._cost(data, th)
         let sol = nelderMead(f, [0, 0, 0], undefined)
-        this.parameters.theta = sol.x
-        this.parameters.cost = sol.x.fx
+        this.parameters.theta = sol
     }
 
     gradient(data){
