@@ -8,7 +8,7 @@ export default class kmeans implements BaseAlgorithm {
     public steps: number = 10;
     public num_clusters: number = 2;
 
-    constructor(num_clusters: number, initial_centroids: any[]){
+    constructor(num_clusters: number, initial_centroids: any[]) {
         this.num_clusters = num_clusters
         this.parameters = {
             centroids: initial_centroids,
@@ -17,7 +17,7 @@ export default class kmeans implements BaseAlgorithm {
         }
     }
 
-    cost(){
+    cost() {
         let total = 0
         for (let i = 0; i < this.num_clusters; i++) {
             let c = this.parameters.clusters[i];
@@ -29,7 +29,7 @@ export default class kmeans implements BaseAlgorithm {
         return total
     }
 
-    step(data){
+    step(data) {
         // update clusters
         this.parameters.clusters = this.parameters.centroids.map(c => [])
         let indices = data
@@ -46,9 +46,9 @@ export default class kmeans implements BaseAlgorithm {
         this.parameters.cost = this.cost()
     }
 
-    train(data){
+    train(data) {
         let i = 0
-        while(i < this.steps){
+        while (i < this.steps) {
             this.step(data);
         }
     }

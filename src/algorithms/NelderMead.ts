@@ -2,7 +2,7 @@ import math from "../utils/math"
 
 /** minimizes a function using the downhill simplex method */
 export function nelderMead(f, x0, parameters) {
-    var allSteps:any = []
+    var allSteps: any = []
     parameters = parameters || {}
 
     var maxIterations = parameters.maxIterations || x0.length * 200,
@@ -25,9 +25,9 @@ export function nelderMead(f, x0, parameters) {
     for (var i = 0; i < N; ++i) {
         var point = x0.slice()
         point[i] = point[i] ? point[i] * nonZeroDelta : zeroDelta
-        simplex[i+1] = point
-        simplex[i+1].fx = f(point)
-        simplex[i+1].id = i+1
+        simplex[i + 1] = point
+        simplex[i + 1].fx = f(point)
+        simplex[i + 1].id = i + 1
     }
 
     function updateSimplex(value) {
@@ -41,7 +41,7 @@ export function nelderMead(f, x0, parameters) {
         simplex[N].fx = value.fx
     }
 
-    var sortOrder = function(a, b) { return a.fx - b.fx }
+    var sortOrder = function (a, b) { return a.fx - b.fx }
 
     var centroid = x0.slice(),
         reflected = x0.slice(),
@@ -60,11 +60,13 @@ export function nelderMead(f, x0, parameters) {
                 state.id = x.id
                 return state
             })
-            sortedSimplex.sort(function(a,b) { return a.id - b.id })
+            sortedSimplex.sort(function (a, b) { return a.id - b.id })
 
-            parameters.history.push({x: simplex[0].slice(),
-                                     fx: simplex[0].fx,
-                                     simplex: sortedSimplex})
+            parameters.history.push({
+                x: simplex[0].slice(),
+                fx: simplex[0].fx,
+                simplex: sortedSimplex
+            })
         }
 
         maxDiff = 0
@@ -89,28 +91,28 @@ export function nelderMead(f, x0, parameters) {
         // reflect the worst point past the centroid  and compute loss at reflected
         // point
         var worst = simplex[N]
-        math.weightedSum(reflected, 1+rho, centroid, -rho, worst)
+        math.weightedSum(reflected, 1 + rho, centroid, -rho, worst)
         reflected.fx = f(reflected)
 
         // if the reflected point is the best seen, then possibly expand
         if (reflected.fx < simplex[0].fx) {
-            math.weightedSum(expanded, 1+chi, centroid, -chi, worst)
+            math.weightedSum(expanded, 1 + chi, centroid, -chi, worst)
             expanded.fx = f(expanded)
             if (expanded.fx < reflected.fx) {
                 updateSimplex(expanded)
-            }  else {
+            } else {
                 updateSimplex(reflected)
             }
         }
 
         // if the reflected point is worse than the second worst, we need to
         // contract
-        else if (reflected.fx >= simplex[N-1].fx) {
+        else if (reflected.fx >= simplex[N - 1].fx) {
             var shouldReduce = false
 
             if (reflected.fx > worst.fx) {
                 // do an inside contraction
-                math.weightedSum(contracted, 1+psi, centroid, -psi, worst)
+                math.weightedSum(contracted, 1 + psi, centroid, -psi, worst)
                 contracted.fx = f(contracted)
                 if (contracted.fx < worst.fx) {
                     updateSimplex(contracted)
@@ -119,7 +121,7 @@ export function nelderMead(f, x0, parameters) {
                 }
             } else {
                 // do an outside contraction
-                math.weightedSum(contracted, 1-psi * rho, centroid, psi*rho, worst)
+                math.weightedSum(contracted, 1 - psi * rho, centroid, psi * rho, worst)
                 contracted.fx = f(contracted)
                 if (contracted.fx < reflected.fx) {
                     updateSimplex(contracted)
