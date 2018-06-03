@@ -147,7 +147,5 @@ export function nelderMead(f, x0, parameters) {
     // return {fx : simplex[0].fx,
     //         x : simplex[0]}
     allSteps.sort((a, b) => b.fx - a.fx)
-    return {
-        allSteps: allSteps
-    }
+    return allSteps
 }
